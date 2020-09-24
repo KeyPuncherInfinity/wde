@@ -1,16 +1,22 @@
 <?php
+    include("./include/file_system.php");
 
-    if(false)
+    if (!isset($_SESSION['ABS_CUR_DIR']))
     {
-        ;
+        chdir(".\\..\\"); # Change the working directory to where wde.html resides
+        
+        $list = scandir(".\\");
+
+        foreach ($list as $file)
+        {
+            echo $file . "<br>";
+        }
+        
+        #list_files_in_directory();
     }
     else
     {
-        session_name("wde_session");
-        session_start();
-        $_SESSION['ABS_CUR_DIR'] = dirname(realpath(".\..\wde.html"));
-        echo $_SESSION['ABS_CUR_DIR'] . "<br>";
-        session_write_close();
+        #list_files_in_directory();
     }
-
+    
 ?>
