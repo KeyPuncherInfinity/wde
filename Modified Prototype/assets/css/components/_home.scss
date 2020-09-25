@@ -1,0 +1,24 @@
+.content {
+
+    .nav-item {
+
+        .nav-link {
+            color: white;
+            position: relative;
+
+            &:hover {
+                color: rgb(139, 139, 255);
+            }
+
+            i {
+                width: 30px;
+                text-align: center;
+            }
+            
+            .mode-edit {
+                position: absolute;
+                right: 20px;
+            }
+        }
+    }
+}
