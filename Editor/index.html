@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Text Editor</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+    <!--Text Editor Area-->
+    <section class="editor d-flex">
+        
+        
+        <!--Side Panel-->
+        <div class="side-panel">
+            
+            <h5 class="text-light pl-3 pt-3 pb-3 m-0 shadow">Explorer</h5>
+
+            <div class="call-to-action mt-3 mb-3 ml-2">
+                <button class="btn text-light">
+                    <i class="far fa-arrow-left"></i>
+                </button>
+                <button class="btn text-light disabled">
+                    <i class="far fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <ul class="navbar-nav">
+                <!--Loop the <li> item below for each folder or file-->
+                <li class="nav-item pl-3">
+                    <a href="#" class="nav-link text-light">
+                        <i class="fas fa-folder"></i>
+                        <!--Echo the file or folder name here-->
+                        display folders here
+                    </a>
+                </li>
+                <!--Loop the <li> item below for each folder or file-->
+                <li class="nav-item pl-3">
+                    <a href="#" class="nav-link text-light">
+                        <i class="far fa-file"></i>
+                        <!--Echo the file or folder name here-->
+                        display files here
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="editor-area w-100">
+
+            <!--Opened Files-->
+            <div class="nav-bar w-100 d-flex align-items-center">
+                <ul class="navbar-nav d-flex align-items-center flex-row">
+                    <!--This area contains file names that are open, if one file is opened we have to
+                    display it over here. like containing those files in array or something. close button will
+                    close that opened file-->
+                    <!--Make sure that if certain file is selected from files here. are marked with class active-->
+                    <li class="nav-item active">
+                        <a href="#" class="nav-link text-light pl-3 pr-3">
+                            <!--Display the file name over here that is opened-->
+                            index.html  <i class="far fa-times ml-2"></i>
+                        </a>
+                    </li>
+                    <!--Inactive file, have to add class active if this file is clicked-->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-light pl-3 pr-3">
+                            <!--Display the file name over here that is opened-->
+                            style.css  <i class="far fa-times ml-2"></i>
+                        </a>
+                    </li>
+                    <!--One more for example-->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-light pl-3 pr-3">
+                            <!--Display the file name over here that is opened-->
+                            main.js  <i class="far fa-times ml-2"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+    
+            <!--Editor Area-->
+            <textarea type="text" class="w-100 text text-light pl-3 pr-3">
+            
+            </textarea>
+        </div>
+
+    </section>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+</body>
+</html>
