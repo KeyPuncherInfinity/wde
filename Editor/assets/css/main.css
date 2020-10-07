@@ -1,0 +1,31 @@
+body {
+  background: #343a40;
+}
+
+.editor {
+  height: 100vh;
+}
+
+.nav-bar {
+  height: 40px;
+  background: #555f69;
+  box-sizing: content-box !important;
+}
+
+.nav-bar .nav-item.active {
+  background: #343a40;
+}
+
+.side-panel {
+  width: 280px !important;
+  background: #3e454d;
+  height: 100%;
+  box-sizing: content-box !important;
+}
+
+.text {
+  background: transparent;
+  border: none;
+  outline: none;
+  height: calc(100% -  60px);
+}
