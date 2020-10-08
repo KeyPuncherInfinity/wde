@@ -49,14 +49,14 @@ function updateExplorer() {
     console.log(library);
 
     //setTimeout(0, createLibraryList(Library));
-    createLibraryList(Library);
+    createLibraryList();
 }
 
-function createLibraryList(lib) {
+function createLibraryList() {
     var li = document.createElement('li');
     li.class = 'nav-item pl-3';
-    var
-    for(ff of lib) {
+    //var
+    for(ff of library.subdir) {
         //if ()
     }
 }
