@@ -1,0 +1,11 @@
+$darkTheme: (
+    bg-dark: #343a40,
+    bg-dark-darken: #1d1f22,
+    bg-dark-darken-1: #131416,
+    bg-dark-lighten: #3e454d,
+    bg-dark-lighten-1: #555f69
+);
+
+@function setColor($color) {
+    @return map-get($darkTheme, $color);
+}
