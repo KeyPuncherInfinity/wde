@@ -26,7 +26,7 @@ class FOLDER EXTENDS FILES
     public const PREV_DIR = ".\\..";
     public const CURR_DIR = ".\\";
 
-    public $sub_dir;
+    public $subdir;
 
     function __construct($name, $path)
     {   
@@ -36,23 +36,23 @@ class FOLDER EXTENDS FILES
     }
 }
 
-function ff_get_list($dir, $ignore)
+function ff_get_list($dir, $name, $ignore)
 {
     $ff_obj_list = array();
 
-    $ff_list = scandir($dir);
+    $ff_list = scandir($dir . $name);
 
-    ff_unset($ff_list, $ignore);
+    $ff_list = ff_unset($ff_list, $ignore);
 
     foreach ($ff_list as $ff)
     {
-        if (is_dir($dir . $ff))
+        if (is_dir($dir . $name . '/' . $ff))
         {
-            $ff_obj = new FOLDER($ff, $dir);
+            $ff_obj = new FOLDER($ff, $dir . $name . '/');
         }
         else
         {
-            $ff_obj = new FILE($ff, $dir);
+            $ff_obj = new FILE($ff, $dir . $name . '/');
         }
 
         array_push($ff_obj_list, $ff_obj);
@@ -69,7 +69,7 @@ function ff_unset($ff_list, $array)
     {
         unset($ff_list[array_search($val2unset, $ff_list)]);
     }
-
+    return $ff_list;
 }
 
 ?>

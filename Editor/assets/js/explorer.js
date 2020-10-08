@@ -1,6 +1,7 @@
 var library = {
-    path: "./../../../",
-    name: ".",
+    path: "./../../..",
+    name: null,
+    type: "dir",
     subdir: null
 }
 
@@ -11,23 +12,40 @@ function init() {
 
 function updateLibrary() {
     sendReq(library);
+    updateExplorer();
 }
 
 function sendReq(dir) {
     var httpReq = new XMLHttpRequest();
-    httpReq.open('POST', './assets/php/request_dir_info.php', true);
+    httpReq.open('POST', './assets/php/request_dir_info.php', false);
     httpReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             //console.log('Response: ' + this.responseText);
             linkToLibrary(dir, this.responseText);
-            console.log(dir.subdir);
+            //console.log(dir.subdir);
         }
     }
     httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    httpReq.send("dir=" + dir.path + dir.name);
+    httpReq.send("dir=" + dir.path + "&name=" + dir.name);
     
 }
 
 function linkToLibrary(dir, responseText) {
     dir.subdir = JSON.parse(responseText);
+
+    for($ff of dir.subdir)
+    {
+        //console.log(library.subdir);
+        if ($ff.type == 'dir')
+        {
+            sendReq($ff);
+        }
+    }
+    
+
+    //console.log(dir);
+}
+
+function updateExplorer() {
+    console.log(library);
 }
