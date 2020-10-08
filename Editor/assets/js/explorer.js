@@ -17,7 +17,7 @@ function updateLibrary() {
 
 function sendReq(dir) {
     var httpReq = new XMLHttpRequest();
-    httpReq.open('POST', './assets/php/request_dir_info.php', false);
+    httpReq.open('POST', './assets/php/request_dir_info.php', true);
     httpReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             //console.log('Response: ' + this.responseText);
@@ -42,10 +42,21 @@ function linkToLibrary(dir, responseText) {
         }
     }
     
-
     //console.log(dir);
 }
 
 function updateExplorer() {
     console.log(library);
+
+    //setTimeout(0, createLibraryList(Library));
+    createLibraryList(Library);
+}
+
+function createLibraryList(lib) {
+    var li = document.createElement('li');
+    li.class = 'nav-item pl-3';
+    var
+    for(ff of lib) {
+        //if ()
+    }
 }
