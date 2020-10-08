@@ -49,14 +49,66 @@ function updateExplorer() {
     console.log(library);
 
     //setTimeout(0, createLibraryList(Library));
-    createLibraryList();
+
+    mainUL = document.getElementById('main-ul');
+    list = createLibraryList(library);
+    mainUL.append(list);
 }
 
-function createLibraryList() {
+function createLibraryList(lib) {
     var li = document.createElement('li');
-    li.class = 'nav-item pl-3';
-    //var
-    for(ff of library.subdir) {
-        //if ()
+
+    for(ff of lib.subdir) {
+        if (ff.type == 'dir') {
+            li.append(createFolderElement(ff));
+        }
+        else {
+            li.append(createFileElement(ff));
+        }
     }
+
+    return li;
+}
+
+function createFileElement(f) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    var iDropdown = document.createElement('i');
+    var iFolder = document.createElement('i');
+    var name = document.createTextNode(' ' + f.name);
+    li.classList = 'nav-item pl-3'
+    a.href = '#';
+    a.classList = 'nav-link text-light';
+    iDropdown.classList = "far fa-chevron-right mr-2";
+    iFolder.classList = "fas fa-file";
+
+    a.append(iDropdown, iFolder, name);
+    li.append(a);
+
+    if (f.type == 'dir') {
+        li.append(createLibraryList(f));
+    }
+    return li;
+}
+
+function createFolderElement(f) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    var iDropdown = document.createElement('i');
+    var iFolder = document.createElement('i');
+    var name = document.createTextNode(' ' + f.name);
+    li.classList = 'nav-item pl-3'
+    a.href = '#';
+    a.classList = 'nav-link text-light';
+    iDropdown.classList = "far fa-chevron-right mr-2";
+    iFolder.classList = "fas fa-folder";
+
+    a.append(iDropdown, iFolder, name);
+    li.append(a);
+
+    if (f.type == 'dir') {
+        li.append(createLibraryList(f));
+    }
+    return li;
+
 }

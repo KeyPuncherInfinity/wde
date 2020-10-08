@@ -73,3 +73,7 @@ body {
   outline: none;
   height: calc(100% -  40px);
 }
+
+#main-ul {
+  margin-left: 2px;
+}
