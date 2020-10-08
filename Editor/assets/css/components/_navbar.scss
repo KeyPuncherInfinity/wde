@@ -1,0 +1,12 @@
+.nav-bar {
+    height: 40px;
+    background: setColor(bg-dark-lighten-1); 
+    box-sizing: content-box !important;
+
+    .nav-item {
+
+        &.active {
+            background: setColor(bg-dark);
+        }
+    }
+}

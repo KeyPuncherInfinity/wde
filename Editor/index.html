@@ -18,32 +18,46 @@
         <!--Side Panel-->
         <div class="side-panel">
             
-            <h5 class="text-light pl-3 pt-3 pb-3 m-0 shadow">Explorer</h5>
+            <h4 class="shadow pt-3 pb-3 pl-3 font-weight-normal text-light">File Explorer</h4>
 
-            <div class="call-to-action mt-3 mb-3 ml-2">
-                <button class="btn text-light" onclick="updateLibrary()">
-                    <i class="far fa-arrow-left"></i>
-                </button>
-                <button class="btn text-light disabled">
-                    <i class="far fa-arrow-right"></i>
-                </button>
+            <div class="curr-page pt-3 pb-3">
+                <ul class="navbar-nav flex-row justify-content-around">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="far text-light fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="far text-light fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas text-light fa-file-plus"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas text-light fa-folder-plus"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas text-light fa-redo"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
-            <ul class="navbar-nav">
+            <ul class="navbar-nav panel font-size-14">
                 <!--Loop the <li> item below for each folder or file-->
                 <li class="nav-item pl-3">
                     <a href="#" class="nav-link text-light">
+                        <i class="far fa-chevron-right mr-2"></i>
                         <i class="fas fa-folder"></i>
                         <!--Echo the file or folder name here-->
-                        display folders here
-                    </a>
-                </li>
-                <!--Loop the <li> item below for each folder or file-->
-                <li class="nav-item pl-3">
-                    <a href="#" class="nav-link text-light">
-                        <i class="far fa-file"></i>
-                        <!--Echo the file or folder name here-->
-                        display files here
+                        foldername
                     </a>
                 </li>
             </ul>
@@ -82,7 +96,7 @@
             </div>
     
             <!--Editor Area-->
-            <textarea type="text" class="w-100 text text-light pl-3 pr-3">
+            <textarea type="text" class="w-100 text text-light pl-3 pr-3" id="textbox">
             
             </textarea>
         </div>
@@ -93,5 +107,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+    <script src="assets/js/main.js" ></script>
 </body>
 </html>
