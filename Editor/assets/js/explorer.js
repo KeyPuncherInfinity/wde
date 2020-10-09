@@ -6,10 +6,52 @@ var library = {
 }
 
 
+var fofi = {
+    createli: function(ff) {
+        var li = document.createElement('li');
+        li.classList = 'nav-item pl-3';
+        li.setAttribute('data-name', ff.name);
+        li.setAttribute('data-path', ff.path);
+        return li;
+    }, 
+
+    createanchor: function() {
+        var a = document.createElement('a');
+        a.classList = 'nav-link text-light';
+        return a;
+    },
+
+    createfileicon: function() {
+        var i = document.createElement('i');
+        i.classList = 'fas fa-file';
+        return i;
+    },
+
+    createfoldericon: function() {
+        var i = document.createElement('i');
+        i.classList = 'fas fa-folder';
+        return i;
+    },
+
+    createchevronright: function() {
+        var i = document.createElement('i');
+        i.classList = 'far fa-chevron-right mr-2';
+        return i;
+    }
+}
+
+
+/* 
 function init() {
     setInterval(updateLibrary, 2000);
 }
+ */
 
+
+/* 
+    Send request for list of files and folders
+    Request is made recursively to recieve all child directories as well
+*/
 function updateLibrary() {
     sendReq(library);
     updateExplorer();
@@ -17,7 +59,7 @@ function updateLibrary() {
 
 function sendReq(dir) {
     var httpReq = new XMLHttpRequest();
-    httpReq.open('POST', './assets/php/request_dir_info.php', true);
+    httpReq.open('POST', './assets/php/request_dir_info.php', false); // Find a better way to do this*
     httpReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             //console.log('Response: ' + this.responseText);
@@ -41,74 +83,76 @@ function linkToLibrary(dir, responseText) {
             sendReq($ff);
         }
     }
-    
     //console.log(dir);
 }
 
-function updateExplorer() {
-    console.log(library);
 
-    //setTimeout(0, createLibraryList(Library));
-
-    mainUL = document.getElementById('main-ul');
-    list = createLibraryList(library);
-    mainUL.append(list);
+/* 
+    The list recieved is added to the left panel
+*/
+function updateExplorer() {   
+    var leftPanel = document.getElementById('main-ul');
+    clear(leftPanel); // First clear the panel before adding to the list
+    unhidelist(leftPanel, library);
 }
 
-function createLibraryList(lib) {
-    var li = document.createElement('li');
 
-    for(ff of lib.subdir) {
+
+// This lists all files and folders contained within the parent folder
+function unhidelist(parent, dir) {
+
+    clear(parent);
+
+    var ul = document.createElement('ul');
+    ul.classList = 'navbar-nav panel font-size-14';
+
+    for (ff of dir.subdir) {
         if (ff.type == 'dir') {
-            li.append(createFolderElement(ff));
+            var ele = createFolderElement(ff);
         }
         else {
-            li.append(createFileElement(ff));
+            var ele = createFileElement(ff);
         }
+        ul.appendChild(ele);
     }
-
-    return li;
+    parent.appendChild(ul);
 }
 
-function createFileElement(f) {
-    var li = document.createElement('li');
-    var a = document.createElement('a');
-    var iDropdown = document.createElement('i');
-    var iFolder = document.createElement('i');
-    var name = document.createTextNode(' ' + f.name);
-    li.classList = 'nav-item pl-3'
-    a.href = '#';
-    a.classList = 'nav-link text-light';
-    iDropdown.classList = "far fa-chevron-right mr-2";
-    iFolder.classList = "fas fa-file";
-
-    a.append(iDropdown, iFolder, name);
-    li.append(a);
-
-    if (f.type == 'dir') {
-        li.append(createLibraryList(f));
-    }
-    return li;
+// This hides the files and folders by clearing the parent of all child nodes
+function hidelist(dir) {
+    clear(dir);
 }
 
+// Create a folder element
 function createFolderElement(f) {
-    var li = document.createElement('li');
-    var a = document.createElement('a');
-    var iDropdown = document.createElement('i');
-    var iFolder = document.createElement('i');
-    var name = document.createTextNode(' ' + f.name);
-    li.classList = 'nav-item pl-3'
-    a.href = '#';
-    a.classList = 'nav-link text-light';
-    iDropdown.classList = "far fa-chevron-right mr-2";
-    iFolder.classList = "fas fa-folder";
 
-    a.append(iDropdown, iFolder, name);
-    li.append(a);
-
-    if (f.type == 'dir') {
-        li.append(createLibraryList(f));
-    }
+    var li = fofi.createli(ff);
+    var a = fofi.createanchor();
+    li.appendChild(a);
+    a.appendChild(fofi.createchevronright());
+    a.appendChild(fofi.createfoldericon());
+    a.appendChild(document.createTextNode(' ' + f.name));
     return li;
+}
 
+// Create a file element
+function createFileElement(f) {
+    
+    var li = fofi.createli(ff);
+    var a = fofi.createanchor();
+    li.appendChild(a);
+    a.appendChild(fofi.createchevronright());
+    a.appendChild(fofi.createfileicon());
+    a.appendChild(document.createTextNode(' ' + f.name));
+
+    li.addEventListener('click', function () {
+        //console.log(this.getAttribute('data-name'));
+        openNewTab(this.getAttribute('data-path'), this.getAttribute('data-name'));
+    })
+    return li;
+}
+
+function openNewTab(path, file) {
+    opentab(path, file);
+    updateTab();
 }
