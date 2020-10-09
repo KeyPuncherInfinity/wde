@@ -10,7 +10,8 @@ var fofi = {
     createli: function(ff) {
         var li = document.createElement('li');
         li.classList = 'nav-item pl-3';
-        li.id = ff.path + ff.name;
+        li.setAttribute('data-name', ff.name);
+        li.setAttribute('data-path', ff.path);
         return li;
     }, 
 
@@ -58,7 +59,7 @@ function updateLibrary() {
 
 function sendReq(dir) {
     var httpReq = new XMLHttpRequest();
-    httpReq.open('POST', './assets/php/request_dir_info.php', true);
+    httpReq.open('POST', './assets/php/request_dir_info.php', false); // Find a better way to do this*
     httpReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             //console.log('Response: ' + this.responseText);
@@ -95,10 +96,6 @@ function updateExplorer() {
     unhidelist(leftPanel, library);
 }
 
-// Clear all child elements from the given element
-function clear(leftPanel) {
-    leftPanel.innerHTML = '';
-}
 
 
 // This lists all files and folders contained within the parent folder
@@ -149,9 +146,13 @@ function createFileElement(f) {
     a.appendChild(document.createTextNode(' ' + f.name));
 
     li.addEventListener('click', function () {
-        console.log(this.id);
-        opentab(this.id);
+        //console.log(this.getAttribute('data-name'));
+        openNewTab(this.getAttribute('data-path'), this.getAttribute('data-name'));
     })
     return li;
+}
 
+function openNewTab(path, file) {
+    opentab(path, file);
+    updateTab();
 }
