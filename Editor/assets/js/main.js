@@ -1,3 +1,5 @@
+var tabs = [];
+
 $(document).ready(function() {
 
     //Adding tabular spaces
@@ -27,3 +29,9 @@ editor.setOptions({
     fontSize: "16px"
 });
 editor.setShowPrintMargin(false);
+
+
+// Open a new tab with the provided file
+function opentab(file) {
+    
+}
