@@ -21,7 +21,7 @@ var tabs = {
 };
 
 // Clear all child elements from the given element
-function clear(leftPanel) {
+function clearChildNodes(leftPanel) {
     leftPanel.innerHTML = '';
 }
 
@@ -30,7 +30,7 @@ function clear(leftPanel) {
 $(document).ready(function() {
 
     //Adding tabular spaces
-    document.getElementById('textbox').addEventListener('keydown', function(e) {
+    document.getElementById('editor').addEventListener('keydown', function(e) {
         if (e.key == 'Tab') {
             e.preventDefault();
             var start = this.selectionStart;
@@ -80,7 +80,7 @@ function fetch(file) {
     fileReq.open('POST', './assets/php/file_content.php', false); // Find a better way to do this*
     fileReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            ;
         }
     }
     fileReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -92,7 +92,7 @@ function fetch(file) {
 function updateTab() {
 
     tablist = document.getElementById('tab-list');
-    clear(tablist);
+    clearChildNodes(tablist);
     //console.log(tabs);
     for(tab of tabs.tabs) {
         var li = tabs.createli();
