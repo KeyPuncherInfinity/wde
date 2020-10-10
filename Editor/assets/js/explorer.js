@@ -12,6 +12,7 @@ var fofi = {
         li.classList = 'nav-item pl-3';
         li.setAttribute('data-name', ff.name);
         li.setAttribute('data-path', ff.path);
+        li.setAttribute('data-visibility', 'hidden');
         return li;
     }, 
 
@@ -39,13 +40,6 @@ var fofi = {
         return i;
     }
 }
-
-
-/* 
-function init() {
-    setInterval(updateLibrary, 2000);
-}
- */
 
 
 /* 
@@ -92,19 +86,55 @@ function linkToLibrary(dir, responseText) {
 */
 function updateExplorer() {   
     var leftPanel = document.getElementById('main-ul');
-    clear(leftPanel); // First clear the panel before adding to the list
+    clearChildNodes(leftPanel); // First clear the panel before adding to the list
     unhidelist(leftPanel, library);
 }
 
+// gets reference to a directory/file given the starting location
+
+function getFileRef(path, name, lib) {
+    regex = new RegExp(lib.path.replace(/\\/g, '\\\\'));
+    console.log(path);
+    path = path.replace(regex, '');
+    console.log(path + name);
+    path = path.split('\\');
+    console.log(path);
+
+
+    return FileRef(path, name, library.subdir);
+}
+
+
+function FileRef (path, name) {
+    
+    lib = library.subdir;
+    for (var i = 1; i < path.length - 1; i++) {
+        for(var dir of lib) {
+            if (dir.name == path[i]) {
+                lib = dir.subdir;
+                break;
+            }
+        }    
+    }
+
+    console.log(lib);
+    for (dir of lib) {
+        if (dir.name == name) {
+            console.log(dir);
+            return dir;
+        }
+    }
+}
 
 
 // This lists all files and folders contained within the parent folder
 function unhidelist(parent, dir) {
 
-    clear(parent);
+    //clearChildNodes(parent);
 
     var ul = document.createElement('ul');
     ul.classList = 'navbar-nav panel font-size-14';
+    ul.id = 'fofi-list';
 
     for (ff of dir.subdir) {
         if (ff.type == 'dir') {
@@ -119,9 +149,26 @@ function unhidelist(parent, dir) {
 }
 
 // This hides the files and folders by clearing the parent of all child nodes
-function hidelist(dir) {
-    clear(dir);
+function hidelist(parent) {
+    clearChildList(parent);
 }
+
+// Toggles between hidden and visibile of directories
+function toggleSubDir(e) {
+    //console.log(e.getAttribute('data-path') + e.getAttribute('data-name'));
+    var fileref = getFileRef(e.getAttribute('data-path'), e.getAttribute('data-name'), library);
+    console.log(fileref);
+
+    if (e.getAttribute('data-visibility') == 'hidden') {
+        unhidelist(e, fileref);
+        e.setAttribute('data-visibility', 'visibile');
+    }
+    else {
+        hidelist(e);
+        e.setAttribute('data-visibility', 'hidden');
+    }
+}
+
 
 // Create a folder element
 function createFolderElement(f) {
@@ -132,6 +179,11 @@ function createFolderElement(f) {
     a.appendChild(fofi.createchevronright());
     a.appendChild(fofi.createfoldericon());
     a.appendChild(document.createTextNode(' ' + f.name));
+
+    li.addEventListener('click', function() {
+        event.stopPropagation();
+        toggleSubDir(this);
+    })
     return li;
 }
 
@@ -147,9 +199,14 @@ function createFileElement(f) {
 
     li.addEventListener('click', function () {
         //console.log(this.getAttribute('data-name'));
+        event.stopPropagation();
         openNewTab(this.getAttribute('data-path'), this.getAttribute('data-name'));
     })
     return li;
+}
+
+function clearChildList(parent) {
+    parent.removeChild(parent.childNodes[1]);
 }
 
 function openNewTab(path, file) {
@@ -162,13 +219,11 @@ function openNewTab(path, file) {
 
 // Gets the root path of the library
 function initlibrary() {
-    console.log('hello');
     var libRootReq = new XMLHttpRequest();
     libRootReq.open('POST', './assets/php/root_path.php', true); // Find a better way to do this*
     libRootReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             library.path = this.responseText;
-            console.log(this.responseText);
         }
     }
     libRootReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

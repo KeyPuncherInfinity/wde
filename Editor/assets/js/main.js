@@ -21,7 +21,7 @@ var tabs = {
 };
 
 // Clear all child elements from the given element
-function clear(leftPanel) {
+function clearChildNodes(leftPanel) {
     leftPanel.innerHTML = '';
 }
 
@@ -92,7 +92,7 @@ function fetch(file) {
 function updateTab() {
 
     tablist = document.getElementById('tab-list');
-    clear(tablist);
+    clearChildNodes(tablist);
     //console.log(tabs);
     for(tab of tabs.tabs) {
         var li = tabs.createli();

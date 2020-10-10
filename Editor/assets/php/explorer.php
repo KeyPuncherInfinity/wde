@@ -46,13 +46,13 @@ function ff_get_list($dir, $name, $ignore)
 
     foreach ($ff_list as $ff)
     {
-        if (is_dir($dir . $name . '/' . $ff))
+        if (is_dir($dir . $name . '\\' . $ff))
         {
-            $ff_obj = new FOLDER($ff, $dir . $name . '/');
+            $ff_obj = new FOLDER($ff, $dir . $name . '\\');
         }
         else
         {
-            $ff_obj = new FILE($ff, $dir . $name . '/');
+            $ff_obj = new FILE($ff, $dir . $name . '\\');
         }
 
         array_push($ff_obj_list, $ff_obj);
