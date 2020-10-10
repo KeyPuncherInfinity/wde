@@ -1,5 +1,5 @@
 var library = {
-    path: "./../../..",
+    path: null,
     name: null,
     type: "dir",
     subdir: null
@@ -156,3 +156,27 @@ function openNewTab(path, file) {
     opentab(path, file);
     updateTab();
 }
+
+
+
+
+// Gets the root path of the library
+function initlibrary() {
+    console.log('hello');
+    var libRootReq = new XMLHttpRequest();
+    libRootReq.open('POST', './assets/php/root_path.php', true); // Find a better way to do this*
+    libRootReq.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            library.path = this.responseText;
+            console.log(this.responseText);
+        }
+    }
+    libRootReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    libRootReq.send();
+}
+
+
+// Tasks to perform when the page loads
+$(document).ready(function() {
+    initlibrary();
+});

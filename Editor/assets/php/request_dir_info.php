@@ -4,12 +4,14 @@
     $dir = $_POST['dir'];
     $name = $_POST['name'];
 
+    #$dir = 'D:\Abdul Aziz\Dev\Projects\wde\htdocs\Editor';
+    #$name = 'null';
+
     if ($name == 'null')
     {
         $name = '';
     }
 
-    //$dir = './../../../.';
 
     $ff_in_lib = ff_get_list($dir, $name,  array('.', '..', '.git'));
 
