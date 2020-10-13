@@ -67,6 +67,8 @@ editor.setOptions({
 editor.setShowPrintMargin(false);
 var EditSession = require('ace/edit_session').EditSession;
 tabs.default.session = new EditSession(tabs.default.message);
+editor.setSession(tabs.default.session);
+updateTab();
 
 // Open a new tab with the provided file
 function opentab(path, file) {
