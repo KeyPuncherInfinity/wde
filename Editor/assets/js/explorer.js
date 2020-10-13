@@ -210,8 +210,9 @@ function clearChildList(parent) {
 }
 
 function openNewTab(path, file) {
-    opentab(path, file);
-    updateTab();
+    if (opentab(path, file)) { 
+        updateTab(); // No need to update tab list if opening a duplicate file
+    }
 }
 
 

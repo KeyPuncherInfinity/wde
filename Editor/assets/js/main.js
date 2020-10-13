@@ -71,6 +71,13 @@ tabs.default.session = new EditSession(tabs.default.message);
 // Open a new tab with the provided file
 function opentab(path, file) {
 
+    for(tab of tabs.tabs) {
+        if ((path + file) == tab.path + tab.name) {
+            activatetab(path, file);
+            return false;
+        }
+    }
+
     var filecontent = fetch(path + file);
     var newSession = new EditSession(filecontent);
 
@@ -83,6 +90,8 @@ function opentab(path, file) {
     tabs.tabs.push(tab);
 
     editor.setSession(newSession);
+
+    return true;
 }
 
 // get contents of a file to open it in the wde
@@ -118,7 +127,7 @@ function updateTab() {
 
         li.appendChild(a);
         li.addEventListener('click', function() {
-            activatetab(this);
+            activatetab(this.getAttribute('data-path'), this.getAttribute('data-name'));
         });
 
         tablist.appendChild(li);
@@ -138,8 +147,8 @@ function closetab(e, tablist) {
     updateTab();
 }
 
-function activatetab(e) {
-    var tabref = getTabRef(e.getAttribute('data-path') + e.getAttribute('data-name'));
+function activatetab(path, name) {
+    var tabref = getTabRef(path + name);
     editor.setSession(tabref.session);
 }
 
