@@ -8,5 +8,17 @@
         &.active {
             background: setColor(bg-dark);
         }
+
+        .nav-link {
+            
+            &:hover {
+                color: white !important;
+            }
+
+            i:hover {
+                color: #bebebe;
+                transform: scale(1.1);
+            }
+        }
     }
 }
