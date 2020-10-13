@@ -72,4 +72,14 @@ function ff_unset($ff_list, $array)
     return $ff_list;
 }
 
+
+function ff_sort_lib($ff_list) {
+    $ff_new_list = array();
+    
+    $ff_dir_list = array_values(array_filter($ff_list, function($a) { return $a->type == 'dir'; }));
+    $ff_file_list = array_values(array_filter($ff_list, function($a) { return $a->type != 'dir'; }));
+
+    $ff_new_list = array_merge($ff_dir_list, $ff_file_list);
+    return $ff_new_list;
+}
 ?>
