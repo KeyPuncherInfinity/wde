@@ -77,7 +77,15 @@ function ff_sort_lib($ff_list) {
     $ff_new_list = array();
     
     $ff_dir_list = array_values(array_filter($ff_list, function($a) { return $a->type == 'dir'; }));
+    usort($ff_dir_list, function($a, $b) {
+        return strcmp(strtolower($a->name), strtolower($b->name));
+    });
+
     $ff_file_list = array_values(array_filter($ff_list, function($a) { return $a->type != 'dir'; }));
+    usort($ff_file_list, function($a, $b) {
+        return strcmp(strtolower($a->name), strtolower($b->name));
+    });
+
 
     $ff_new_list = array_merge($ff_dir_list, $ff_file_list);
     return $ff_new_list;
