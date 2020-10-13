@@ -94,11 +94,11 @@ function updateExplorer() {
 
 function getFileRef(path, name, lib) {
     regex = new RegExp(lib.path.replace(/\\/g, '\\\\'));
-    console.log(path);
+    //console.log(path);
     path = path.replace(regex, '');
-    console.log(path + name);
+    //console.log(path + name);
     path = path.split('\\');
-    console.log(path);
+    //console.log(path);
 
 
     return FileRef(path, name, library.subdir);
@@ -117,10 +117,10 @@ function FileRef (path, name) {
         }    
     }
 
-    console.log(lib);
+    //console.log(lib);
     for (dir of lib) {
         if (dir.name == name) {
-            console.log(dir);
+            //console.log(dir);
             return dir;
         }
     }
@@ -157,7 +157,7 @@ function hidelist(parent) {
 function toggleSubDir(e) {
     //console.log(e.getAttribute('data-path') + e.getAttribute('data-name'));
     var fileref = getFileRef(e.getAttribute('data-path'), e.getAttribute('data-name'), library);
-    console.log(fileref);
+    //console.log(fileref);
 
     if (e.getAttribute('data-visibility') == 'hidden') {
         unhidelist(e, fileref);
@@ -210,8 +210,9 @@ function clearChildList(parent) {
 }
 
 function openNewTab(path, file) {
-    opentab(path, file);
-    updateTab();
+    if (opentab(path, file)) { 
+        updateTab(); // No need to update tab list if opening a duplicate file
+    }
 }
 
 
@@ -220,7 +221,7 @@ function openNewTab(path, file) {
 // Gets the root path of the library
 function initlibrary() {
     var libRootReq = new XMLHttpRequest();
-    libRootReq.open('POST', './assets/php/root_path.php', true); // Find a better way to do this*
+    libRootReq.open('POST', './assets/php/root_path.php', false); // Find a better way to do this*
     libRootReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             library.path = this.responseText;
@@ -234,4 +235,5 @@ function initlibrary() {
 // Tasks to perform when the page loads
 $(document).ready(function() {
     initlibrary();
+    updateLibrary();
 });
