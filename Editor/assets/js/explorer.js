@@ -220,7 +220,7 @@ function openNewTab(path, file) {
 // Gets the root path of the library
 function initlibrary() {
     var libRootReq = new XMLHttpRequest();
-    libRootReq.open('POST', './assets/php/root_path.php', true); // Find a better way to do this*
+    libRootReq.open('POST', './assets/php/root_path.php', false); // Find a better way to do this*
     libRootReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             library.path = this.responseText;
@@ -234,4 +234,5 @@ function initlibrary() {
 // Tasks to perform when the page loads
 $(document).ready(function() {
     initlibrary();
+    updateLibrary();
 });

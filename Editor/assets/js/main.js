@@ -1,9 +1,16 @@
 var tabs = {
     tabs: [],
 
-    createli: function() {
+    default: {
+        session: null,
+        message: '\n\tWelcome\n\tPlease Create a file or open a file to begin'
+    },
+
+    createli: function(tab) {
         var li = document.createElement('li');
         li.classList = 'nav-item active';
+        li.setAttribute('data-path', tab.path);
+        li.setAttribute('data-name', tab.name);
         return li;
     },
     
@@ -13,9 +20,11 @@ var tabs = {
         return a;
     },
 
-    createcloseicon: function() {
+    createcloseicon: function(tab) {
         var i = document.createElement('i');
         i.classList = 'far fa-times ml-2';
+        i.setAttribute('data-path', tab.path);
+        i.setAttribute('data-name', tab.name);
         return i;
     }
 };
@@ -57,6 +66,7 @@ editor.setOptions({
 });
 editor.setShowPrintMargin(false);
 var EditSession = require('ace/edit_session').EditSession;
+tabs.default.session = new EditSession(tabs.default.message);
 
 // Open a new tab with the provided file
 function opentab(path, file) {
@@ -65,6 +75,7 @@ function opentab(path, file) {
     var newSession = new EditSession(filecontent);
 
     var tab = {
+        path: path,
         name: file,
         session: newSession
     };
@@ -95,13 +106,47 @@ function updateTab() {
     clearChildNodes(tablist);
     //console.log(tabs);
     for(tab of tabs.tabs) {
-        var li = tabs.createli();
+        var li = tabs.createli(tab);
         var a = tabs.createanchor();
+        var icon = tabs.createcloseicon(tab);
         a.appendChild(document.createTextNode(tab.name));
-        a.appendChild(tabs.createcloseicon());
+        icon.addEventListener('click', function() {
+            event.stopPropagation();
+            closetab(this, tabs.tabs);
+        });
+        a.appendChild(icon);
+
         li.appendChild(a);
+        li.addEventListener('click', function() {
+            activatetab(this);
+        });
 
         tablist.appendChild(li);
     }
 }
 
+function closetab(e, tablist) {
+    var tabref = getTabRef(e.getAttribute('data-path') + e.getAttribute('data-name'));
+    var index = tablist.indexOf(tabref);
+    if (index != 0) {
+        editor.setSession(tablist[index - 1].session);
+    }
+    else {
+        editor.setSession(tabs.default.session);
+    }
+    tablist.splice(tablist.indexOf(tabref), 1);
+    updateTab();
+}
+
+function activatetab(e) {
+    var tabref = getTabRef(e.getAttribute('data-path') + e.getAttribute('data-name'));
+    editor.setSession(tabref.session);
+}
+
+function getTabRef(key) {
+    for(tab of tabs.tabs) {
+        if (key == (tab.path + tab.name)) {
+            return tab;
+        }
+    }
+}
