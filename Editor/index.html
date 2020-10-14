@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link" onclick="createFile()">
                             <i class="fas text-light fa-file-plus"></i>
                         </a>
                     </li>
@@ -102,10 +102,10 @@
 
     </section>
 
-    
-    <div class="middle new-folder-prompt" id="new-folder"> 
+    <!-- This div only appears when the user tries to create a folder-->
+    <div class="middle new-folder-prompt new-prompt" id="new-folder"> 
         <div class="top-bar">
-            <a href="#" class="nav-link text-light pl-3 pr-3" onclick="closenewfolderprompt()">
+            <a href="#" class="nav-link text-light pl-3 pr-3" onclick="closeprompt()">
                 <!-- Close the layout -->
                 Close  <i class="far fa-times ml-2"></i>
             </a>
@@ -120,6 +120,30 @@
 
         <div class="bottom-bar">
             <a href="#" class="nav-link text-light pl-3 pr-3" onclick="createfolderinlibrary()">
+                <!-- Save the file -->
+                Save
+            </a>
+        </div>
+    </div>
+
+    <!-- This div only appears when the user tries to create a file-->
+    <div class="middle new-folder-prompt new-prompt" id="new-file"> 
+        <div class="top-bar">
+            <a href="#" class="nav-link text-light pl-3 pr-3" onclick="closeprompt()">
+                <!-- Close the layout -->
+                Close  <i class="far fa-times ml-2"></i>
+            </a>
+        </div>
+        
+        <div class="middle-bar"> 
+            <label class="text-light">
+                New file: 
+                <input type="text" class="" id="new-file-name">
+            </label>
+        </div>
+
+        <div class="bottom-bar">
+            <a href="#" class="nav-link text-light pl-3 pr-3" onclick="createfileinlibrary()">
                 <!-- Save the file -->
                 Save
             </a>
