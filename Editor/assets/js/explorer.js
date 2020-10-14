@@ -230,22 +230,25 @@ function selectfolder(e) {
     fofi.currentfolder.setAttribute('style', 'background: #3f75cc;')
 }
 
+
+// Most functions required to create a folder
 function createFolder() {
-    console.log(fofi.currentfolder.getAttribute('data-path') + fofi.currentfolder.getAttribute('data-name'));
+    //console.log(fofi.currentfolder.getAttribute('data-path') + fofi.currentfolder.getAttribute('data-name'));
     document.getElementById('new-folder').style.display = 'flex';
 }
 
-function closenewfolderprompt() {
-    document.getElementById('new-folder').style.display = 'none';
+function closeprompt() {
+    document.getElementsByClassName('new-prompt')[0].style.display = 'none';
+    document.getElementsByClassName('new-prompt')[1].style.display = 'none';
 }
 
 function createfolderinlibrary() {
-    closenewfolderprompt();
+    closeprompt();
     var newname = document.getElementById('new-folder-name').value;
     document.getElementById('new-folder-name').value = null;
 
     var folderReq = new XMLHttpRequest();
-    folderReq.open('POST', './assets/php/new_folder_req.php', true);
+    folderReq.open('POST', './assets/php/new_create_req.php', true);
     folderReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText == 1) {
@@ -257,9 +260,37 @@ function createfolderinlibrary() {
         }
     }
     folderReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    folderReq.send("path=" + fofi.currentfolder.getAttribute('data-path') + "&name=" + fofi.currentfolder.getAttribute('data-name') + "&new_dir=" + newname);
-    //folderReq.send("path=hello");
+    folderReq.send("path=" + fofi.currentfolder.getAttribute('data-path') + "&name=" + fofi.currentfolder.getAttribute('data-name') + "&new_name=" + newname + "&type=dir");    
 }
+
+// Most functions required to create a file
+
+function createFile() {
+    document.getElementById('new-file').style.display = 'flex';
+}
+
+function createfileinlibrary() {
+    closeprompt();
+    var newname = document.getElementById('new-file-name').value;
+    document.getElementById('new-file-name').value = null;
+    var folderReq = new XMLHttpRequest();
+    folderReq.open('POST', './assets/php/new_create_req.php', true);
+    folderReq.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            if (this.responseText == 1) {
+                var ref = getFileRef(fofi.currentfolder.getAttribute('data-path'), fofi.currentfolder.getAttribute('data-name'), library);
+                sendReq(ref);
+                hidelist(fofi.currentfolder);
+                unhidelist(fofi.currentfolder, ref);
+                openNewTab(fofi.currentfolder.getAttribute('data-path') + fofi.currentfolder.getAttribute('data-name') + '\\', newname);
+            }
+        }
+    }
+    folderReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    folderReq.send("path=" + fofi.currentfolder.getAttribute('data-path') + "&name=" + fofi.currentfolder.getAttribute('data-name') + "&new_name=" + newname + "&type=file");
+}
+
 
 // Gets the root path of the library
 function initlibrary() {

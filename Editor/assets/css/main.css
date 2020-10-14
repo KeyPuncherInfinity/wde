@@ -104,7 +104,7 @@ body {
   left: 35%;
 }
 
-#new-folder {
+.new-prompt {
   width: 30%;
   height: 30%;
   border: 1px gray solid;
@@ -115,24 +115,24 @@ body {
   border-radius: 5px;
 }
 
-#new-folder .top-bar {
+.new-prompt .top-bar {
   display: flex;
   flex-direction: row-reverse;
   flex-grow: 1;
 }
 
-#new-folder .middle-bar {
+.new-prompt .middle-bar {
   display: inherit;
   align-items: center;
   justify-content: center;
   flex-grow: 1;
 }
 
-#new-folder .middle-bar input {
+.new-prompt .middle-bar input {
   margin-left: 5px;
 }
 
-#new-folder .bottom-bar {
+.new-prompt .bottom-bar {
   display: inherit;
   align-items: center;
   justify-content: center;
