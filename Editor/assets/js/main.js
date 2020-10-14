@@ -17,6 +17,7 @@ var tabs = {
     createanchor: function() {
         var a = document.createElement('a');
         a.classList = 'nav-link text-light pl-3 pr-3';
+        a.href='#';
         return a;
     },
 
