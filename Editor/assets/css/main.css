@@ -98,3 +98,43 @@ body {
   outline: none;
   height: calc(100% -  40px);
 }
+
+.middle {
+  top: 35%;
+  left: 35%;
+}
+
+#new-folder {
+  width: 30%;
+  height: 30%;
+  border: 1px gray solid;
+  background: #1d1f22;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+#new-folder .top-bar {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-grow: 1;
+}
+
+#new-folder .middle-bar {
+  display: inherit;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+#new-folder .middle-bar input {
+  margin-left: 5px;
+}
+
+#new-folder .bottom-bar {
+  display: inherit;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
