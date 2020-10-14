@@ -24,7 +24,7 @@ var fofi = {
 
     createfileicon: function() {
         var i = document.createElement('i');
-        i.classList = 'fas fa-file';
+        i.classList = 'fas fa-file-code';
         return i;
     },
 
@@ -167,6 +167,7 @@ function toggleSubDir(e) {
         hidelist(e);
         e.setAttribute('data-visibility', 'hidden');
     }
+
 }
 
 
@@ -193,7 +194,6 @@ function createFileElement(f) {
     var li = fofi.createli(ff);
     var a = fofi.createanchor();
     li.appendChild(a);
-    a.appendChild(fofi.createchevronright());
     a.appendChild(fofi.createfileicon());
     a.appendChild(document.createTextNode(' ' + f.name));
 

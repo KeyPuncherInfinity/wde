@@ -88,6 +88,10 @@ body {
   background: #555f69;
 }
 
+.side-panel .nav-link {
+  cursor: pointer;
+}
+
 .text {
   background: transparent;
   border: none;
