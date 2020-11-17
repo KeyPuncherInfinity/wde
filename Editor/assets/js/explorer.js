@@ -250,16 +250,27 @@ function createfolderinlibrary() {
     folderReq.open('POST', './assets/php/new_create_req.php', true);
     folderReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
             if (this.responseText == 1) {
-                var ref = getFileRef(fofi.currentfolder.getAttribute('data-path'), fofi.currentfolder.getAttribute('data-name'), library);
-                sendReq(ref);
-                hidelist(fofi.currentfolder);
-                unhidelist(fofi.currentfolder, ref);
+                if (fofi.currentfolder != null) {
+                    var ref = getFileRef(fofi.currentfolder.getAttribute('data-path'), fofi.currentfolder.getAttribute('data-name'), library);
+                    sendReq(ref);
+                    hidelist(fofi.currentfolder);
+                    unhidelist(fofi.currentfolder, ref);
+                }
+                else {
+                    updateLibrary();
+                }
             }
         }
     }
     folderReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    folderReq.send("path=" + fofi.currentfolder.getAttribute('data-path') + "&name=" + fofi.currentfolder.getAttribute('data-name') + "&new_name=" + newname + "&type=dir");    
+    if (fofi.currentfolder != null) {
+        folderReq.send("path=" + fofi.currentfolder.getAttribute('data-path') + "&name=" + fofi.currentfolder.getAttribute('data-name') + "&new_name=" + newname + "&type=dir");    
+    }
+    else {
+        folderReq.send("path=" + library.path + "&name=" + "\\" + "&new_name=" + newname + "&type=dir");
+    }
 }
 
 // Most functions required to create a file
@@ -276,18 +287,28 @@ function createfileinlibrary() {
     folderReq.open('POST', './assets/php/new_create_req.php', true);
     folderReq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             if (this.responseText == 1) {
-                var ref = getFileRef(fofi.currentfolder.getAttribute('data-path'), fofi.currentfolder.getAttribute('data-name'), library);
-                sendReq(ref);
-                hidelist(fofi.currentfolder);
-                unhidelist(fofi.currentfolder, ref);
-                openNewTab(fofi.currentfolder.getAttribute('data-path') + fofi.currentfolder.getAttribute('data-name') + '\\', newname);
+                if (fofi.currentfolder != null) {
+                    var ref = getFileRef(fofi.currentfolder.getAttribute('data-path'), fofi.currentfolder.getAttribute('data-name'), library);
+                    sendReq(ref);
+                    hidelist(fofi.currentfolder);
+                    unhidelist(fofi.currentfolder, ref);
+                    openNewTab(fofi.currentfolder.getAttribute('data-path') + fofi.currentfolder.getAttribute('data-name') + '\\', newname);
+                }
+                else {
+                    updateLibrary();
+                    openNewTab(library.path + "\\", newname);
+                }
             }
         }
     }
     folderReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    folderReq.send("path=" + fofi.currentfolder.getAttribute('data-path') + "&name=" + fofi.currentfolder.getAttribute('data-name') + "&new_name=" + newname + "&type=file");
+    if (fofi.currentfolder != null) {
+        folderReq.send("path=" + fofi.currentfolder.getAttribute('data-path') + "&name=" + fofi.currentfolder.getAttribute('data-name') + "&new_name=" + newname + "&type=file");
+    }
+    else {
+        folderReq.send("path=" + library.path + "&name=" + "\\" + "&new_name=" + newname + "&type=file");
+    }
 }
 
 
