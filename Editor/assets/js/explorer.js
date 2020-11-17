@@ -110,7 +110,6 @@ function getFileRef(path, name, lib) {
 
 
 function FileRef (path, name) {
-    
     lib = library.subdir;
     for (var i = 1; i < path.length - 1; i++) {
         for(var dir of lib) {

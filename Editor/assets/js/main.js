@@ -100,14 +100,28 @@ function opentab(path, file) {
     var tab = {
         path: path,
         name: file,
-        session: newSession
+        session: newSession,
+        mode: function(){
+            editor.session.setMode(getMode(getFileRef(path, file, library).extension));
+        }
     };
-
+    
     tabs.tabs.push(tab);
 
     editor.setSession(newSession);
+    tab.mode();
 
     return true;
+}
+
+//returns appropriate mode to use in setMode function
+function getMode(ext) {
+    switch (ext) {
+        case 'js': return 'ace/mode/javascript';
+        case 'html': return 'ace/mode/html';
+        case 'php': return 'ace/mode/php';
+    }
+    
 }
 
 // get contents of a file to open it in the wde
