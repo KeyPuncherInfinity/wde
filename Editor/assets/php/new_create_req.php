@@ -35,6 +35,7 @@
     }
     else
     {
+        print_r($_POST);
     }
 
 ?>

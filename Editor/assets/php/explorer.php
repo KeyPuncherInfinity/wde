@@ -18,6 +18,7 @@ class FILE EXTENDS FILES
         $this->type = "file";
         $this->name = $name;
         $this->path = $path;
+        $this->extension = pathinfo($name, PATHINFO_EXTENSION);
     }
 }
 

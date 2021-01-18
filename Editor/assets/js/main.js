@@ -6,11 +6,20 @@ var tabs = {
         message: '\n\tWelcome\n\tPlease Create a file or open a file to begin'
     },
 
+    current: null,
+
     createli: function(tab) {
         var li = document.createElement('li');
         li.classList = 'nav-item active';
         li.setAttribute('data-path', tab.path);
         li.setAttribute('data-name', tab.name);
+        if (tabs.current != null) {
+            tabs.current.setAttribute('class', 'nav-item');
+            tabs.current = li;
+        }
+        else {
+            tabs.current = li;
+        }
         return li;
     },
     
@@ -73,10 +82,14 @@ updateTab();
 
 // Open a new tab with the provided file
 function opentab(path, file) {
-
     for(tab of tabs.tabs) {
         if ((path + file) == tab.path + tab.name) {
-            activatetab(path, file);
+            for (element of document.getElementById('tab-list').childNodes) {
+                if (path + file == element.getAttribute('data-path') + element.getAttribute('data-name')) {
+                    e = element;
+                }
+            }
+            activatetab(path, file, e);
             return false;
         }
     }
@@ -87,14 +100,28 @@ function opentab(path, file) {
     var tab = {
         path: path,
         name: file,
-        session: newSession
+        session: newSession,
+        mode: function(){
+            editor.session.setMode(getMode(getFileRef(path, file, library).extension));
+        }
     };
-
+    
     tabs.tabs.push(tab);
 
     editor.setSession(newSession);
+    tab.mode();
 
     return true;
+}
+
+//returns appropriate mode to use in setMode function
+function getMode(ext) {
+    switch (ext) {
+        case 'js': return 'ace/mode/javascript';
+        case 'html': return 'ace/mode/html';
+        case 'php': return 'ace/mode/php';
+    }
+    
 }
 
 // get contents of a file to open it in the wde
@@ -130,7 +157,7 @@ function updateTab() {
 
         li.appendChild(a);
         li.addEventListener('click', function() {
-            activatetab(this.getAttribute('data-path'), this.getAttribute('data-name'));
+            activatetab(this.getAttribute('data-path'), this.getAttribute('data-name'), this);
         });
 
         tablist.appendChild(li);
@@ -150,9 +177,12 @@ function closetab(e, tablist) {
     updateTab();
 }
 
-function activatetab(path, name) {
+function activatetab(path, name, e) {
     var tabref = getTabRef(path + name);
     editor.setSession(tabref.session);
+    tabs.current.setAttribute('class', 'nav-item');
+    e.setAttribute('class', 'nav-item active');
+    tabs.current = e;
 }
 
 function getTabRef(key) {

@@ -58,6 +58,7 @@ body {
 
 .nav-bar .nav-item.active {
   background: #343a40;
+  color: blue;
 }
 
 .nav-bar .nav-item .nav-link:hover {
@@ -137,4 +138,8 @@ body {
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+}
+
+.current {
+  color: skyblue;
 }
